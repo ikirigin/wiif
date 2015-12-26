@@ -1,14 +1,23 @@
 import datetime
+import requests
 
 from django.core.management.base import BaseCommand, CommandError
 
 from base.core import get_ivan, get_token
-
 from base.models import Meal
 
-def send_gmail(tos, subject, msg_text, msg_html):
-    pass
+from wiif.settings import MAILGUN_URL, MAILGUN_API_KEY, MAILGUN_FROM
 
+
+def send_email(to, subject, txt, html):
+    data = {
+        "from": MAILGUN_FROM,
+        "to": 'ivan.kirigin@gmail.com',
+        "subject": subject,
+        "text": txt,
+        'html': html,
+    }
+    r = requests.post(MAILGUN_URL + '/messages', auth=("api", MAILGUN_API_KEY), data=data)
 
 
 class Command(BaseCommand):
@@ -54,9 +63,11 @@ class Command(BaseCommand):
         meal = {'B':'breakfast', 'L':'lunch', 'D':'dinner'}[meal_time]
         day_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][today.weekday()]
         subject = "%s on %s, %.4d/%.2d/%.2d" % (meal, day_of_week, year, month, day)
-        body = """<a href="%s">GOOD</a><br/>
+        html = """<a href="%s">GOOD</a><br/>
 <br/>
 <a href="%s">BAD</a>
 <br/>
 your next decision is important
 """
+        txt = "http://www.wiifapp.com/"
+        send_email('ivan.kirigin@gmail.com', subject, txt, html)

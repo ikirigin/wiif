@@ -6,14 +6,14 @@ def get_ivan():
     try:
         user = User.objects.filter(email='ivan.kirigin@gmail.com')[0]
     except:
-        user = User.objects.create_user('ivan.kirigin@gmail.com', 'ivan.kirigin@gmail.com', IVAN_PASSWORD)
+        user = User.objects.create_user('ivan.kirigin@gmail.com', 'ivan.kirigin@gmail.com', 'fuckfuck')
         user.save()
     return user
 
 
 def login_ivan(request):
     user = get_ivan()
-    user = authenticate(username='ivan.kirigin@gmail.com', password=IVAN_PASSWORD)
+    user = authenticate(username='ivan.kirigin@gmail.com', password='fuckfuck')
     login(request, user)
     return user
 

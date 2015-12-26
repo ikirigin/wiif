@@ -99,8 +99,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
-
+# Email
+MAILGUN_URL = os.environ.get('MAILGUN_URL', '')
+MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY', '')
+MAILGUN_FROM = os.environ.get('MAILGUN_FROM', '')
+MAILGUN_TO = os.environ.get('MAILGUN_TO', 'ivan.kirigin@gmail.com')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
