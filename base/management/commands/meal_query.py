@@ -9,12 +9,12 @@ from base.models import Meal
 from wiif.settings import MAILGUN_URL, MAILGUN_API_KEY, MAILGUN_FROM
 
 
-def send_email(to, subject, txt, html):
+def send_email(to, subject, text, html):
     data = {
         "from": MAILGUN_FROM,
         "to": 'ivan.kirigin@gmail.com',
         "subject": subject,
-        "text": txt,
+        "text": text,
         'html': html,
     }
     r = requests.post(MAILGUN_URL + '/messages', auth=("api", MAILGUN_API_KEY), data=data)
@@ -57,8 +57,8 @@ class Command(BaseCommand):
         month = today.month
         day = today.day
         
-        good_url = "/token_set_meal/%.6d/%.4d/%.2d/%.2d/%s/%s/" % (token, year, month, day, meal_time, 'True')
-        bad_url = "/token_set_meal/%.6d/%.4d/%.2d/%.2d/%s/%s/" % (token, year, month, day, meal_time, 'False')
+        good_url = "http://www.wiifapp.com/token_set_meal/%.6d/%.4d/%.2d/%.2d/%s/%s/" % (token, year, month, day, meal_time, 'True')
+        bad_url = "http://www.wiifapp.com/token_set_meal/%.6d/%.4d/%.2d/%.2d/%s/%s/" % (token, year, month, day, meal_time, 'False')
         
         meal = {'B':'breakfast', 'L':'lunch', 'D':'dinner'}[meal_time]
         day_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][today.weekday()]
@@ -68,6 +68,6 @@ class Command(BaseCommand):
 <a href="%s">BAD</a>
 <br/>
 your next decision is important
-"""
-        txt = "http://www.wiifapp.com/"
-        send_email('ivan.kirigin@gmail.com', subject, txt, html)
+""" % (good_url, bad_url)
+        text = "http://www.wiifapp.com/"
+        send_email('ivan.kirigin@gmail.com', subject, text, html)
