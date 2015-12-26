@@ -1,9 +1,5 @@
 TODO list:
 
-1. make a todo list
-2. Data model for records
-3. URL endpoint to make/update record
-4. Tokens for editing records
 4. Email prompts to update record: thrice daily
 5. Record editor UI to backfill
 6. Data model for status subscribers
@@ -18,3 +14,6 @@ TODO list:
 DONE List
 
 1. make a todo list
+2. Data model for records
+3. URL endpoint to make/update record
+4. Tokens for editing record

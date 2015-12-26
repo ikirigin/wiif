@@ -22,8 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-tn_^^*5ec(+ez=-+_vd@tx*ha#^^qo5zsibr&g&r4w3jjr1$t'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -80,6 +79,17 @@ import dj_database_url
 DATABASES = {}
 DATABASES['default'] =  dj_database_url.config()
 
+DEBUG = True
+USING_LOCAL_SETTINGS = True
+TEMPLATE_DEBUG = True
+
+try:
+    from local_settings import *
+    print("settings.py: using local settings")
+except ImportError:
+    print("settings.py: using production settings")
+
+
 
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
@@ -97,7 +107,7 @@ STATICFILES_DIRS = (
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 

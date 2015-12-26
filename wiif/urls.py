@@ -18,5 +18,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'base.views.home', name='home'),
+    
+    url(r'^token_set_meal/(?P<token>[0-9]{6})/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<day>[0-9]{2})/(?P<meal>\w+)/(?P<quality>\w+)/$', 'base.views.token_set_meal', name='token_set_meal'),
+    url(r'^set_meal/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<day>[0-9]{2})/(?P<meal>\w+)/(?P<quality>\w+)/$', 'base.views.token_set_meal', name='token_set_meal'),
+    
     url(r'^admin/', include(admin.site.urls)),
 ]
