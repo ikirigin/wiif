@@ -1,6 +1,6 @@
 TODO list:
 
-4. Email prompts to update record: thrice daily
+
 5. Record editor UI to backfill
 6. Data model for status subscribers
 7. Manually add people to email: me
@@ -17,3 +17,4 @@ DONE List
 2. Data model for records
 3. URL endpoint to make/update record
 4. Tokens for editing record
+4. Email prompts to update record: thrice daily

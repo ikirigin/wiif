@@ -36,7 +36,7 @@ class Meal(models.Model):
     meal_time = models.CharField(max_length=1, choices=MEAL_TIMES)
     # True=good, False=bad
     quality = models.BooleanField(default=False)
-    prompt_sent = models.BooleanField(default=False) 
+    created_at = models.DateTimeField(null=True, db_index=True, auto_now_add=True)
     
     @classmethod
     def create_or_update(cls, user, year, month, day, meal, quality):
@@ -55,6 +55,24 @@ class Meal(models.Model):
     
     def __str__(self):
         return self.date.strftime(DATE_FORMAT) + ' ' + self.meal_time + ': ' + str(self.quality)
+
+
+class MealQueried(models.Model):
+    MEAL_TIMES = (
+        ('B', 'breakfast'),
+        ('L', 'lunch'),
+        ('D', 'dinner'),
+    )
+    user = models.ForeignKey(User, db_index=True)
+    date = models.DateField(db_index=True, null=True)
+    meal_time = models.CharField(max_length=1, choices=MEAL_TIMES)
+    sent_at = models.DateTimeField(null=True, db_index=True, auto_now_add=True)
+
+
+class WifeNotified(models.Model):
+    user = models.ForeignKey(User, db_index=True)
+    meal = models.ForeignKey(Meal, db_index=True)
+    sent_at = models.DateTimeField(null=True, db_index=True, auto_now_add=True)
 
 
 '''

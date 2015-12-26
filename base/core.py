@@ -1,6 +1,18 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
+from wiif.settings import MAILGUN_URL, MAILGUN_API_KEY, MAILGUN_FROM
+
+def send_email(to, subject, text, html=None):
+    data = {
+        "from": MAILGUN_FROM,
+        "to": to,
+        "subject": subject,
+        "text": text,
+        'html': html,
+    }
+    r = requests.post(MAILGUN_URL + '/messages', auth=("api", MAILGUN_API_KEY), data=data)
+
 
 def get_ivan():
     try:
@@ -13,7 +25,7 @@ def get_ivan():
 
 def login_ivan(request):
     user = get_ivan()
-    user = authenticate(username='ivan.kirigin@gmail.com', password='fuckfuck')
+    user = authenticate(username='ivan.kirigin@gmail.com', password='fuckfuck'py)
     login(request, user)
     return user
 
