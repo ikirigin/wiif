@@ -28,7 +28,7 @@ class Command(BaseCommand):
         today = datetime.date.today()
         # check the time for the meal.
         now = datetime.datetime.now()
-        if now.house < 10:
+        if now.hour < 10:
             # don't ask if it is in the morning
             # assume dinner last night was sent 
             return
