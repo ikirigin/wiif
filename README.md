@@ -1,4 +1,4 @@
-** Overview ** 
+## Overview 
 
 WIIF: Why Is Ivan Fat?
 
@@ -10,7 +10,7 @@ If there is a bad meal, Ivan's wife (get it? wiif!) Abby is notified by email.
 
 [More context on the idea here](https://docs.google.com/document/d/119eEQ60W6JMxddzZkUWQEoyHY1XxVXsLKI16M6IFcdc/edit)
 
-** TODO list: ** 
+## TODO list: 
 
 9. Auth flow for withings to connect account (just connect to ivan user)
 10. Data model for weight data
@@ -20,7 +20,7 @@ If there is a bad meal, Ivan's wife (get it? wiif!) Abby is notified by email.
 13. Track bad meals when on trend to affect weight. Notify with a warning
 
 
-** DONE List **
+## DONE List **
 
 1. make a todo list
 2. Data model for records
