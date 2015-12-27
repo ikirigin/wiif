@@ -25,7 +25,7 @@ def get_ivan():
 
 def login_ivan(request):
     user = get_ivan()
-    user = authenticate(username='ivan.kirigin@gmail.com', password='fuckfuck'py)
+    user = authenticate(username='ivan.kirigin@gmail.com', password='fuckfuck')
     login(request, user)
     return user
 
