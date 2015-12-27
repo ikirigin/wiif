@@ -2,23 +2,17 @@ import datetime
 import random
 import requests
 
-
 from django.core.management.base import BaseCommand, CommandError
 
 from base.core import get_ivan, get_token, send_email
 from base.models import Meal, MealQueried
 
 
-
-
-
-
-
 class Command(BaseCommand):
     help = 'Email Ivan and ask about the last meal'
     
     def handle(self, *args, **options):
-        user = get_ivan()
+        ivan = get_ivan()
         today = datetime.date.today()
         # check the time for the meal.
         now = datetime.datetime.now()
