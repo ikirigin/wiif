@@ -9,9 +9,9 @@
                     {{m.meal_time}}
                     {% if m.meal %}
                         {% if m.meal.quality %}
-                        <strong>good</strong> <a href="{{m.set_bad_url}}">#!</a>
+                        <strong><font color="blue">good</font></strong> <a href="{{m.set_bad_url}}">#!</a>
                         {% else %}
-                        <strong>bad</strong> <a href="{{m.set_good_url}}">#!</a>
+                        <strong><font color="red">bad</font></strong> <a href="{{m.set_good_url}}">#!</a>
                         {% endif %}
                     {% else %}
                       <a href="{{m.set_good_url}}">good</a> : <a href="{{m.set_bad_url}}">bad</a> 
