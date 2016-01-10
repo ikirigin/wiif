@@ -52,10 +52,15 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'wiif.urls'
 
+TEMPLATE_DIRS = [
+    'templates', 
+    'wiif/templates',
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

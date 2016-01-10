@@ -12,6 +12,8 @@ If there is a bad meal, Ivan's wife (get it? wiif!) Abby is notified by email.
 
 ## TODO list: 
 
+8. fix bug around notifications
+9. fix template & view data so that there is a calendar view
 9. Auth flow for withings to connect account (just connect to ivan user)
 10. Data model for weight data
 10. Pull in weight data routinely 

@@ -1,0 +1,25 @@
+<table border="1" width="700px">
+    {% for week in weeks %}
+        <tr>
+            {% for day in week %}
+            <td width="100px">
+                {{day.0.date.month}} / {{day.0.date.day}}
+                <hr/>
+                {% for m in day %}
+                    {{m.meal_time}}
+                    {% if m.meal %}
+                        {% if m.meal.quality %}
+                        <strong>good</strong> <a href="{{m.set_bad_url}}">#!</a>
+                        {% else %}
+                        <strong>bad</strong> <a href="{{m.set_good_url}}">#!</a>
+                        {% endif %}
+                    {% else %}
+                      <a href="{{m.set_good_url}}">good</a> : <a href="{{m.set_bad_url}}">bad</a> 
+                    {% endif %}
+                    <br/>
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
