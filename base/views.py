@@ -44,7 +44,7 @@ def get_meal_weeks(user):
     d = earliest
     oneday = datetime.timedelta(days=1)
     all_dates = []
-    while d < d_now:
+    while d <= d_now:
         all_dates.append(d)
         d += oneday
     # pick out all the week-starts, make a week list
