@@ -5,8 +5,9 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response 
+from django.template import RequestContext
 
 from base.core import get_ivan, login_ivan, get_token
 from base.models import Meal
@@ -124,3 +125,45 @@ def set_meal(request, year, month, day, meal, quality):
 def update_user_meal(user, year, month, day, meal, quality):
     m = Meal.create_or_update(user, year, month, day, meal, quality)
     return m
+
+
+def login_user(request):
+    user = request.user
+    if user.is_authenticated():
+        return HttpResponseRedirect(reverse('home'))
+    if request.method == 'GET':
+        context = RequestContext({})
+        return render_to_response('login.html', {}, context_instance=RequestContext(request))
+    elif request.method != 'POST':
+        return HttpResponseRedirect(reverse('home'))
+    email = request.POST.get('email','')
+    password = request.POST.get('password','')
+    if not email or not password:
+        return HttpResponseRedirect(reverse('login')+'?missing_email_or_password')
+    user = authenticate(username=email, password=password)
+    login(request, user)
+    return HttpResponseRedirect(reverse('home'))
+
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home')+'?loggedout')
+
+
+def signup_user(request):
+    user = request.user
+    if user.is_authenticated():
+        return HttpResponseRedirect(reverse('home'))
+    if request.method == 'GET':
+        context = RequestContext({})
+        return render_to_response('signup.html', {}, context_instance=RequestContext(request))
+    elif request.method != 'POST':
+        return HttpResponseRedirect(reverse('home'))
+    email = request.POST.get('email','')
+    password = request.POST.get('password','')
+    if not email or not password:
+        return HttpResponseRedirect(reverse('signup')+'?missing_email_or_password')
+    user = User.objects.create_user(email, email, password)
+    user = authenticate(username=email, password=password)
+    login(request, user)
+    return HttpResponseRedirect(reverse('home'))
