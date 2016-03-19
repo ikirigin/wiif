@@ -9,19 +9,27 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response 
 from django.template import RequestContext
 
-from base.core import get_ivan, login_ivan, get_token
+from base.core import get_token
 from base.models import Meal
 
 IVAN_PASSWORD = 'fuckfuck'
 
 def cal(request):
-    user = get_ivan()
-    meals_by_day, weeks, debug = get_meal_weeks(user)
-    return render_to_response('cal.html', {'weeks':weeks, 'meals_by_day':meals_by_day, 'debug':debug})
+    user = request.user
+    meals_by_day, weeks = get_meal_weeks(user)
+    return render_to_response('cal.html', {'weeks':weeks, 'meals_by_day':meals_by_day, 'user':user})
     
 
+def landing(request):
+    return render_to_response('landing.html', {}, context_instance=RequestContext(request))
+
+
 def home(request):
-    return cal(request)
+    if request.user.is_authenticated():
+        return cal(request)
+    else:
+        return landing(request)
+        
 
 
 def get_meal_weeks(user):
@@ -38,6 +46,8 @@ def get_meal_weeks(user):
         }
     # get each day in the week
     dates = meals_by_day.keys()
+    if not dates:
+        dates = [datetime.date.today()]
     earliest = min(dates)
     earliest = earliest - datetime.timedelta(days=earliest.weekday())
     now = datetime.datetime.now()
@@ -51,7 +61,6 @@ def get_meal_weeks(user):
     # pick out all the week-starts, make a week list
     starts = filter(lambda d: d.weekday()==0, all_dates)
     starts.sort()
-    debug = starts
     # fill up weeks
     weeks = []
     for s in starts:
@@ -75,7 +84,7 @@ def get_meal_weeks(user):
             week.append(day)
         weeks.append(week)
     weeks = weeks[::-1]
-    return meals_by_day, weeks, debug
+    return meals_by_day, weeks
 
 
 def get_today_meal_links():
@@ -109,7 +118,9 @@ def go_home():
 
 def token_set_meal(request, token, year, month, day, meal, quality):
     # TODO actually check the token. For now, just get ivan.
-    user = login_ivan(request)
+    user = request.user
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('login'))
     m = update_user_meal(user, year, month, day, meal, quality)
     return go_home()
 

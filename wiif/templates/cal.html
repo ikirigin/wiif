@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+signed in as: {{user}}
 <table border="1" width="700px">
     {% for week in weeks %}
         <tr>
@@ -23,3 +27,4 @@
         </tr>
     {% endfor %}
 </table>
+{% endblock %}
