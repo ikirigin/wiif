@@ -128,7 +128,7 @@ def token_set_meal(request, token, year, month, day, meal, quality):
 def set_meal(request, year, month, day, meal, quality):
     user = request.user
     if not request.is_authenticated():
-        return HttpResponseRedirect(reverse('home'))
+        return HttpResponseRedirect(reverse('login'))
     m = update_user_meal(user, year, month, day, meal, quality)
     return go_home()
 
@@ -152,8 +152,11 @@ def login_user(request):
     if not email or not password:
         return HttpResponseRedirect(reverse('login')+'?missing_email_or_password')
     user = authenticate(username=email, password=password)
-    login(request, user)
-    return HttpResponseRedirect(reverse('home'))
+    if user:
+        login(request, user)
+        return HttpResponseRedirect(reverse('home'))
+    else:
+        return HttpResponseRedirect(reverse('login')+'?bad_login')
 
 
 def logout_user(request):
